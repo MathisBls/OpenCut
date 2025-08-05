@@ -51,9 +51,11 @@ export function TimelinePlayhead({
 
   // Track scroll position to lock playhead to frame
   useEffect(() => {
-    const tracksViewport = tracksScrollRef.current?.querySelector(
-      "[data-radix-scroll-area-viewport]"
-    ) as HTMLElement;
+    // Try to find Radix viewport first, fallback to ref if not found
+    const tracksViewport =
+      (tracksScrollRef.current?.querySelector(
+        "[data-radix-scroll-area-viewport]"
+      ) as HTMLElement | null) || tracksScrollRef.current;
 
     if (!tracksViewport) return;
 
@@ -86,9 +88,11 @@ export function TimelinePlayhead({
   // Get the timeline content width and viewport width for right boundary
   const timelineContentWidth =
     duration * TIMELINE_CONSTANTS.PIXELS_PER_SECOND * zoomLevel;
-  const tracksViewport = tracksScrollRef.current?.querySelector(
-    "[data-radix-scroll-area-viewport]"
-  ) as HTMLElement;
+  // Try to find Radix viewport first, fallback to ref if not found
+  const tracksViewport =
+    (tracksScrollRef.current?.querySelector(
+      "[data-radix-scroll-area-viewport]"
+    ) as HTMLElement | null) || tracksScrollRef.current;
   const viewportWidth = tracksViewport?.clientWidth || 1000;
 
   // Constrain playhead to never appear outside the timeline area
